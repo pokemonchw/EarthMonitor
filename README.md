@@ -10,7 +10,7 @@ EarthMonitor
 这是一个基于python的bot仓库\
 自用为主，不考虑面向服务扩展\
 基于GPL协议开源\
-持续开发ing \
+持续开发ing
 
 外部支持
 ----
@@ -18,7 +18,7 @@ EarthMonitor
 依赖于himawaripy项目\
 地址:https://github.com/boramalper/himawaripy \
 依赖于qqbot项目\
-地址:https://github.com/pandolia/qqbot \
+地址:https://github.com/pandolia/qqbot
 
 主要用途
 ----
