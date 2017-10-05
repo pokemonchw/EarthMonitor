@@ -10,15 +10,15 @@ EarthMonitor
 这是一个基于python的bot仓库\
 自用为主，不考虑面向服务扩展\
 基于GPL协议开源\
-持续开发ing\
+持续开发ing \
 
 外部支持
 ----
 
 依赖于himawaripy项目\
-地址:https://github.com/boramalper/himawaripy\
+地址:https://github.com/boramalper/himawaripy \
 依赖于qqbot项目\
-地址:https://github.com/pandolia/qqbot\
+地址:https://github.com/pandolia/qqbot \
 
 主要用途
 ----
@@ -52,7 +52,7 @@ byayoi开源社区(待建设)防护\
 该爬虫参考了https://github.com/hxy513696765/Python-monitor-earthquake/ \
 若要执行检测站，只需在项目目录下执行./Main.py即可\
 特别警告，千万不要放入crontab中\
-写在最后，对本项目有任何使用上的困难，请自行解决\
+写在最后，对本项目有任何使用上的困难，请自行解决
 
 作者
 ---
