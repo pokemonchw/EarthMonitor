@@ -62,14 +62,10 @@ def writeJudgment(filePath,commitList):
                            "'同步完成,请留意'",shell=True)
         writeGithubLastup(commit, filePath)
     pass
+
 # 写入git同步记录
 def writeGithubLastup(commit,filePath):
-    if os.path.exists(filePath) and os.path.isfile(filePath):
-        file = open(filePath, 'w', encoding='utf-8')
-        file.write(commit)
-        file.close()
-    else:
-        file = open(filePath, 'w', encoding='utf-8')
-        file.write(commit)
-        file.close()
+    file = open(filePath, 'w', encoding='utf-8')
+    file.write(commit)
+    file.close()
     pass
