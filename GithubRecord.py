@@ -45,7 +45,8 @@ def writeJudgment(filePath,commitList):
         line = file.readlines()
         file.close()
         line = list(line)
-        while str(line).find(commit) == -1:
+        judgment = "repo:" + commitName + ",author:" + name + ",date:" + commitTime
+        while str(line).find(judgment) == -1:
             subprocess.call("qq send group 阿里夫大陆开源社区 '地球监测站Past.1''\n'" +
                                "'致先觉，这里是心智模型001号，正在为您同步commits记录:''\n'" +
                                "'仓库:''" + commitName + "''\n'"
