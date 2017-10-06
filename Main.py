@@ -4,6 +4,7 @@ import subprocess
 
 import time
 
+import GithubRecord
 import SeismicInformation
 
 def start():
@@ -14,11 +15,13 @@ def start():
 def job():
     tA = threading.Thread(target = seismicInformation)
     tB = threading.Thread(target = satelliteDesktop)
-    for t in [tA, tB]:
+    tC = threading.Thread(target = synchronizationGithub)
+    for t in [tA, tC, tB]:
         t.setDaemon(True)
         t.start()
     tB.join(6500)
     tA._stop()
+    tC._stop()
     tB._stop()
     job()
     pass
@@ -30,6 +33,10 @@ def seismicInformation():
 def satelliteDesktop():
     subprocess.call("himawaripy", shell=True)
     time.sleep(600)
+    pass
+
+def synchronizationGithub():
+    GithubRecord.getGithubRecord()
     pass
 
 def startInformation():
