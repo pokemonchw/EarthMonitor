@@ -16,27 +16,30 @@ def job():
     tA = threading.Thread(target = seismicInformation)
     tB = threading.Thread(target = satelliteDesktop)
     tC = threading.Thread(target = synchronizationGithub)
-    for t in [tA, tC, tB]:
+    for t in [tA, tB, tC]:
         t.setDaemon(True)
         t.start()
+    tA.join(6500)
     tB.join(6500)
+    tC.join(6500)
     tA._stop()
-    tC._stop()
     tB._stop()
+    tC._stop()
     job()
     pass
 
 def seismicInformation():
     SeismicInformation.getSeismicInformation()
+    time.sleep(300)
     pass
 
 def satelliteDesktop():
     subprocess.call("himawaripy", shell=True)
-    time.sleep(600)
     pass
 
 def synchronizationGithub():
     GithubRecord.getGithubRecord()
+    time.sleep(300)
     pass
 
 def startInformation():
