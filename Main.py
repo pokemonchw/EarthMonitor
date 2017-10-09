@@ -1,45 +1,36 @@
 #!/usr/bin/python3
-import threading
 import subprocess
-
 import time
-
+import threading
 import GithubRecord
 import SeismicInformation
 
 def start():
     startInformation()
-    job()
-    pass
-
-def job():
-    tA = threading.Thread(target = seismicInformation)
-    tB = threading.Thread(target = satelliteDesktop)
-    tC = threading.Thread(target = synchronizationGithub)
-    for t in [tA, tB, tC]:
-        t.setDaemon(True)
-        t.start()
-    tA.join(6500)
-    tB.join(6500)
-    tC.join(6500)
-    tA._stop()
-    tB._stop()
-    tC._stop()
-    job()
+    tA = threading.Thread(target=seismicInformation)
+    tB = threading.Thread(target=satelliteDesktop)
+    tC = threading.Thread(target=synchronizationGithub)
+    tA.start()
+    tB.start()
+    tC.start()
     pass
 
 def seismicInformation():
     SeismicInformation.getSeismicInformation()
-    time.sleep(300)
+    time.sleep(600)
+    seismicInformation()
     pass
 
 def satelliteDesktop():
     subprocess.call("himawaripy", shell=True)
+    time.sleep(600)
+    satelliteDesktop()
     pass
 
 def synchronizationGithub():
     GithubRecord.getGithubRecord()
-    time.sleep(300)
+    time.sleep(600)
+    synchronizationGithub()
     pass
 
 def startInformation():

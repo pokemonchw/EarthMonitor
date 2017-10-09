@@ -1,7 +1,9 @@
+#!/usr/bin/python3
 import os
 import urllib.request
 import json
 import subprocess
+import time
 
 # 读取github数据
 def getGithubRecord():

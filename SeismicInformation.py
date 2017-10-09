@@ -1,9 +1,16 @@
+#!/usr/bin/python3
 import datetime
 import urllib.request
 import re
 import os
 import subprocess
 import time
+
+def start():
+    getSeismicInformation()
+    time.sleep(600)
+    start()
+    pass
 
 # 抓取网页数据
 def getSeismicInformation():
@@ -65,22 +72,28 @@ def nagnitudeJudgment(seimicInformation,nagnitude,localTimeS):
     pass
 
 # 读写判断
-def writeJudgment(seimicInformation,filePath,alerMessage):
+def writeJudgment(seimicInformation,filePath,alertMessage):
     if os.path.exists(filePath) and os.path.isfile(filePath):
         file = open(filePath,'r')
         line = file.readlines()
         file.close()
         line = list(line)
         while str(line).find(seimicInformation) == -1:
-            while alerMessage == 0:
+            while alertMessage == 0:
                 subprocess.call("qq send group 阿里夫大陆开源社区 '地球监测站Past.1''\n'" +
-                                "'致先觉，这里是心智模型002号，正在向您传输高等地震灾害实况，具体信息为:''\n'"
-                                + "'" + seimicInformation + "''\n'" +
+                                "'致先觉，这里是心智模型002号，正在向您传输高等地震灾害实况，具体信息为:''\n''" +
+                                seimicInformation + "''\n'" +
                                 "'该信息已保存至日志中，请留意'", shell=True)
                 break
             writeSeismicInformation(seimicInformation, filePath)
             break
     else:
+        while alertMessage == 0:
+            subprocess.call("qq send group 阿里夫大陆开源社区 '地球监测站Past.1''\n'" +
+                            "'致先觉，这里是心智模型002号，正在向您传输高等地震灾害实况，具体信息为:''\n''" +
+                            seimicInformation + "''\n'" +
+                            "'该信息已保存至日志中，请留意'", shell=True)
+            break
         writeSeismicInformation(seimicInformation, filePath)
     pass
 
@@ -104,3 +117,5 @@ def utc2local(utc_st):
     offset = local_time - utc_time
     local_st = utc_st + offset
     return local_st
+
+getSeismicInformation()
