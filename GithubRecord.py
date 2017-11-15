@@ -3,7 +3,7 @@ import os
 import urllib.request
 import json
 import subprocess
-import time
+import MessagePush
 
 # 读取github数据
 def getGithubRecord():
@@ -49,19 +49,24 @@ def writeJudgment(filePath,commitList):
         line = list(line)
         judgment = "repo:" + commitName + ",author:" + name + ",date:" + commitTime
         while str(line).find(judgment) == -1:
-            subprocess.call("qq send group 阿里夫大陆开源社区 '地球监测站Past.1''\n'" +
-                               "'致先觉，这里是心智模型001号，正在为您同步commits记录:''\n'" +
-                               "'仓库:''" + commitName + "''\n'"
-                               "'提交人:''" + name + "''\n'" +
-                               "'提交时间:''" + commitTime + "''\n'" +
-                               "'备注信息:''" + message + "''\n'"
-                               "'同步完成,请留意'",shell=True)
+            githubName = "仓库:" + commitName
+            pushPeople = "提交人:" + name
+            pushTime = "提交时间:" + commitTime
+            remarks = "备注信息:" + message
+            overMessage = "同步完成，请留意"
+            messagePush = "致先觉，这里是心智模型001号，正在为您同步commits记录:" + "\n" +\
+                           githubName + "\n" +\
+                           pushPeople + "\n" +\
+                           pushTime + "\n" +\
+                           remarks + "\n" +\
+                           overMessage
+            MessagePush.messagePush(messagePush)
             writeGithubLastup(commit,filePath)
             break
     else:
-        subprocess.call("qq send group 阿里夫大陆开源社区 '地球监测站Past.1''\n'" +
-                           "'致先觉,这里是心智模型001号,github仓库<" + commitName + ">信息同步ing'" + "'\n'" +
-                           "'同步完成,请留意'",shell=True)
+        messagePush = ["致先觉,这里是心智模型001号,github仓库<" + commitName + ">信息同步ing \n 同步完成,请留意"
+                       ]
+        MessagePush.messagePush(messagePush)
         writeGithubLastup(commit, filePath)
     pass
 

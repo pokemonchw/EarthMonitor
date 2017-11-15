@@ -4,6 +4,7 @@ import time
 import threading
 import GithubRecord
 import SeismicInformation
+import MessagePush
 
 def start():
     startInformation()
@@ -34,7 +35,8 @@ def synchronizationGithub():
     pass
 
 def startInformation():
-    subprocess.call("qq send group 阿里夫大陆开源社区 '地球监测站Past.1''\n''链接建立完成，通信开始，监测站正常工作中'",shell=True)
+    message = "链接建立完成，通信开始，监测站正常工作中"
+    MessagePush.messagePush(message)
     pass
 
 start()

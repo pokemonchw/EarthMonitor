@@ -17,8 +17,8 @@ EarthMonitor
 
 依赖于himawaripy项目\
 地址:https://github.com/boramalper/himawaripy \
-依赖于qqbot项目\
-地址:https://github.com/pandolia/qqbot
+依赖于notify2库\
+通过pip3 install notify2安装（通常情况下已默认安装有）
 
 主要用途
 ----
@@ -43,7 +43,7 @@ byayoi开源社区(待建设)防护\
 但是，或许会有人抱着交流学习的目的下载下去玩耍也说不定？\
 那么就写一点说明\
 目前的版本是以SeismicInformation.py为核心\
-地震信息储存在data目录下，6.5级以上会通过qqbot的接口发送消息至q群\
+地震信息储存在data目录下，6.5级以上会通过notify2接口推送\
 该发送命令只在konsole下进行过测试，不建议在任何非linux系统进行尝试\
 同样的，你可以发送到自己的bot中，该数据采集自:earthquake.usgs.gov\
 不使用himawaripy(向日葵8号气象卫星拍摄照片同步桌面)的话，注释掉Main.py中第31行即可\
