@@ -7,10 +7,9 @@ def messagePush(message):
 
 def systemMessage(message):
     notify2.init("地球监测站")
-    maxList = len(message)
     earthMonitorPush = notify2.Notification("地球监测站Past.1",message)
-    earthMonitorPush.set_hint("x",1)
-    earthMonitorPush.set_hint("y",3)
+    earthMonitorPush.set_hint("x",10)
+    earthMonitorPush.set_hint("y",10)
     earthMonitorPush.show()
     pass
 
