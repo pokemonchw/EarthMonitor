@@ -57,15 +57,12 @@ def satelliteDesktop(sleepTime):
 
 def synchronizationGithub(sleepTime):
     print('get Github Now')
-    GithubRecord.getGithubRecord()
-    '''
     try:
         GithubRecord.getGithubRecord()
         print('get Github Over')
         time.sleep(sleepTime)
     except Exception as e:
         print('get github Null:\n' + str(e))
-    '''
     threadPool.remove('synchronizationGithub')
 
 def typhoonInformation(sleepTime):

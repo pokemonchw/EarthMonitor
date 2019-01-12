@@ -37,23 +37,31 @@ def getCommits(commitsUrl,commitName):
         commitJson = json.loads(commitHttp.read().decode("utf-8"))
         commitJudgment(commitJson[0], commitName)
     except Exception as e:
-        if str(e) == 'HTTP Error 409: Conflict':
+        eJson = json.load(e)
+        if e.read() == 'HTTP Error 409: Conflict':
             pass
-        else:
-            socksDefault = socks.get_default_proxy()
-            socketDefault = socket.socket
-            socks.set_default_proxy(socks.SOCKS5, PROXY_IP, PROXY_PORT)
-            socket.socket = socks.socksocket
+        elif eJson['documentation_url'] == 'https://developer.github.com/v3/#rate-limiting':
             try:
-                time.sleep(2)
-                commitHttp = request.urlopen(commitUrlData)
-            except:
-                time.sleep(2)
-                commitHttp = request.urlopen(commitUrlData)
-            socks.setdefaultproxy(socksDefault)
-            socket.socket = socketDefault
-            commitJson = json.loads(commitHttp.read().decode("utf-8"))
-            commitJudgment(commitJson[0], commitName)
+                socksDefault = socks.get_default_proxy()
+                socketDefault = socket.socket
+                socks.set_default_proxy(socks.SOCKS5, PROXY_IP, PROXY_PORT)
+                socket.socket = socks.socksocket
+                try:
+                    time.sleep(2)
+                    commitHttp = request.urlopen(commitUrlData)
+                except:
+                    time.sleep(2)
+                    commitHttp = request.urlopen(commitUrlData)
+                socks.setdefaultproxy(socksDefault)
+                socket.socket = socketDefault
+                commitJson = json.loads(commitHttp.read().decode("utf-8"))
+                commitJudgment(commitJson[0], commitName)
+            except Exception as e:
+                if str(e) == 'HTTP Error 409: Conflict':
+                    pass
+                else:
+                    getCommits(commitsUrl,commitName)
+
 
 # commit数据判断
 def commitJudgment(commit,commitName):
