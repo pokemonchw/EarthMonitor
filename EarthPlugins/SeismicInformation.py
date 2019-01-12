@@ -1,22 +1,26 @@
 #!/usr/bin/python3
-import datetime
-import urllib.request
-import re
-import os
-import subprocess
-import time
-import MessagePush
+from urllib import request,error
+import re,datetime,os,time
+from EarthPlugins import MessagePush,CacheHandle
 
 # 抓取网页数据
 def getSeismicInformation():
     url = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.atom'
-    http = urllib.request.urlopen(url)
+    http = urlOpen(url)
     content = http.read().decode('utf-8')
     nation = re.findall(r'</id><title>M(.*?) - (.*?)</title><updated>',content)
     utcTime = re.findall(r'Time</dt><dd>(.*) (.*) UTC</dd><dd>', content)
     dimension = re.findall(r'</dd><dt>Location</dt><dd>(.*)&deg;(.*) (.*)&deg;(.*)</dd><dt>', content)
     informationProcessing(nation,utcTime,dimension)
     pass
+
+def urlOpen(url):
+    try:
+        http = request.urlopen(url)
+    except error.URLError:
+        time.sleep(1)
+        http = request.urlopen(url)
+    return http
 
 # 处理数据
 def informationProcessing(nation,utcTime,dimension):
@@ -54,7 +58,13 @@ def informationProcessing(nation,utcTime,dimension):
 # 震级判断
 def nagnitudeJudgment(seimicInformation,nagnitude,localTimeS):
     dataTime = localTimeS[0:10]
-    if float(nagnitude) >= 6.5:
+    if 'Volcanic Eruption' in nagnitude:
+        nagnitudeJudge = float(nagnitude.strip('Volcanic Eruption'))
+    elif 'Explosion' in nagnitude:
+        nagnitudeJudge = float(nagnitude.strip('Explosion'))
+    else:
+        nagnitudeJudge = float(nagnitude)
+    if nagnitudeJudge >= 6.5:
         baseDir = os.path.dirname(__file__)
         filePath = os.path.join(baseDir, 'data/seismicInformation', 'strongShock.csv')
         alertMessage = 0
@@ -75,18 +85,20 @@ def writeJudgment(seimicInformation,filePath,alertMessage):
         line = list(line)
         while str(line).find(seimicInformation) == -1:
             while alertMessage == 0:
-                message = "致先觉，这里是心智模型002号，正在向您传输高等地震灾害实况，具体信息为:" + "\n" +\
+                message = "心智模型001号通信ing \n 正在向您传输高等地震灾害实况，具体信息为:" + "\n" +\
                            seimicInformation + "\n" +\
                            "该信息已保存至日志中，请留意"
+                CacheHandle.nowMassageId = 'Seismic'
                 MessagePush.messagePush(message)
                 break
             writeSeismicInformation(seimicInformation, filePath)
             break
     else:
         while alertMessage == 0:
-            message = "致先觉，这里是心智模型002号，正在向您传输高等地震灾害实况，具体信息为:" + "\n" +\
+            message = "心智模型001号通信ing \n 正在向您传输高等地震灾害实况，具体信息为:" + "\n" +\
                        seimicInformation + "\n" +\
                        "该信息已保存至日志中，请留意"
+            CacheHandle.nowMassageId = 'Seismic'
             MessagePush.messagePush(message)
             break
         writeSeismicInformation(seimicInformation, filePath)
