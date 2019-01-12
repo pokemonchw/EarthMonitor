@@ -1,11 +1,9 @@
 #!/usr/bin/python3
-import notify2,subprocess,os,telegram
+import notify2,subprocess,os,telegram,requests
 from EarthPlugins import PushMastodon,CacheHandle
-from cqhttp import CQHttp
 from bot_constant import *
 from telegram.ext import Updater
 
-qq_bot = CQHttp(api_root=API_ROOT,access_token=ACCESS_TOKEN,secret=SECRET)
 updater = Updater(TOKEN,request_kwargs={'proxy_url':PROXY_URL})
 tg_bot = updater.bot
 baseDir = os.path.dirname(__file__)
@@ -46,7 +44,7 @@ def tgQQMessage(message):
     try:
         tgMessage(message)
     except telegram.error.TimedOut:
-        tgMessage(message)
+        pass
     qqMessage(message)
 
 def tgMessage(message):
@@ -55,4 +53,6 @@ def tgMessage(message):
 
 def qqMessage(message):
     for i in QQ_LIST:
-        qq_bot.send_group_msg(i,message=message,auto_escape=True)['message_id']
+        url = API_ROOT + 'send_group_msg?group_id=' + str(i) + '&message=' + message
+        requests.post(url)
+

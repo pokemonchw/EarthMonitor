@@ -24,7 +24,6 @@ def getGithubRecord():
         socket.socket = socketDefault
     httpJson = json.loads(http.read().decode("utf-8"))
     for loop in range(0, len(httpJson), 1):
-        print(loop)
         commitsUrl = httpJson[loop]['commits_url']
         commitName = httpJson[loop]['name']
         commitsUrl = str(commitsUrl[0:-6])

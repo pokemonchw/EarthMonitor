@@ -2,12 +2,6 @@
 
 # cq-http-api server config
 API_ROOT = ''  # should be the same as cq-http-api api address
-ACCESS_TOKEN = ''  # should be the same as cq-http-api config
-SECRET = ''  # should be the same as cq-http-api config
-
-# cq-http-api client config, should be the same as cq-http-api post config
-HOST = '127.0.0.1'
-PORT = 8888
 
 TOKEN = '' #tgbot token
 QQ_BOT_ID = ''

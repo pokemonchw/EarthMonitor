@@ -1,8 +1,5 @@
 #!/usr/bin/python3
-import subprocess
-import time
-import threading
-import urllib
+import subprocess,time,threading
 from EarthPlugins import MessagePush, GithubRecord, SeismicInformation,ArchLinuxCNRSS,CacheHandle,TyphoonInformation
 
 threadPool = []
@@ -60,12 +57,15 @@ def satelliteDesktop(sleepTime):
 
 def synchronizationGithub(sleepTime):
     print('get Github Now')
+    GithubRecord.getGithubRecord()
+    '''
     try:
         GithubRecord.getGithubRecord()
         print('get Github Over')
         time.sleep(sleepTime)
     except Exception as e:
         print('get github Null:\n' + str(e))
+    '''
     threadPool.remove('synchronizationGithub')
 
 def typhoonInformation(sleepTime):
