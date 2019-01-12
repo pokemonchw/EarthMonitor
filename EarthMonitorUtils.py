@@ -16,11 +16,11 @@ def start():
             else:
                 threadPool.append(threadIdList[i])
                 threadName = threadIdList[i] + str(index)
-                nowThreading = threading.Thread(target=threadList[i],args=(sleepTimeList[i],),name=threadName,daemon=True)
+                nowThreading = threading.Thread(target=threadList[i],args=(sleepTimeList[i],threadIdList[i]),name=threadName,daemon=True)
                 nowThreading.start()
             time.sleep(1)
 
-def archLinuxCnRss(sleepTime):
+def archLinuxCnRss(sleepTime,threadingId):
     print('get ArchLinuxCN RSS Now')
     try:
         ArchLinuxCNRSS.getArchLinuxCNRSS()
@@ -28,9 +28,9 @@ def archLinuxCnRss(sleepTime):
         time.sleep(sleepTime)
     except Exception as e:
         print('get ArchLinuxCN RSS Null:\n' + str(e))
-    threadPool.remove('archLinuxCnRss')
+    threadPool.remove(threadingId)
 
-def typhoonNews(sleepTime):
+def typhoonNews(sleepTime,threadingId):
     print('get typhoonNew Now')
     try:
         TyphoonInformation.pushNews()
@@ -38,9 +38,9 @@ def typhoonNews(sleepTime):
         time.sleep(sleepTime)
     except Exception as e:
         print('get typhoonNews Null:\n' + str(e))
-    threadPool.remove('typhoonNews')
+    threadPool.remove(threadingId)
 
-def seismicInformation(sleepTime):
+def seismicInformation(sleepTime,threadingId):
     print('get seismic Now')
     try:
         SeismicInformation.getSeismicInformation()
@@ -48,14 +48,14 @@ def seismicInformation(sleepTime):
         time.sleep(sleepTime)
     except Exception as e:
         print('get seismic Null:\n' + str(e))
-    threadPool.remove('seismicInformation')
+    threadPool.remove(threadingId)
 
-def satelliteDesktop(sleepTime):
+def satelliteDesktop(sleepTime,threadingId):
     subprocess.call("himawaripy", shell=True)
     time.sleep(sleepTime)
-    threadPool.remove('satelliteDesktop')
+    threadPool.remove(threadingId)
 
-def synchronizationGithub(sleepTime):
+def synchronizationGithub(sleepTime,threadingId):
     print('get Github Now')
     try:
         GithubRecord.getGithubRecord()
@@ -63,9 +63,9 @@ def synchronizationGithub(sleepTime):
         time.sleep(sleepTime)
     except Exception as e:
         print('get github Null:\n' + str(e))
-    threadPool.remove('synchronizationGithub')
+    threadPool.remove(threadingId)
 
-def typhoonInformation(sleepTime):
+def typhoonInformation(sleepTime,threadingId):
     print('get typhoonData Now')
     try:
         TyphoonInformation.pushTyphoonInfo()
@@ -73,9 +73,9 @@ def typhoonInformation(sleepTime):
         time.sleep(sleepTime)
     except Exception as e:
         print('get typhoonData Null:\n' + str(e))
-    threadPool.remove('typhoonInformation')
+    threadPool.remove(threadingId)
 
-def startInformation(sleepTime):
+def startInformation(sleepTime,threadingId):
     message = "链接建立完成，通信开始，监测站正常工作中"
     CacheHandle.nowMassageId = 'start'
     MessagePush.messagePush(message)
