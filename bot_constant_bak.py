@@ -20,5 +20,5 @@ MASTODON_ACCESS_TOKEN = ''
 MASTODON_API_BASE_URL = ''
 
 # GitHub
-GITHUB_API_URL = 'https://api.github.com/users/pokemonchw/repos'
-GITHUB_TOKEN = 'cd198a784de2e46c443599caf51df597d9705cf7'
+GITHUB_API_URL = ''
+GITHUB_TOKEN = ''
