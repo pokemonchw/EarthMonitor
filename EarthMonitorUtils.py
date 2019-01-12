@@ -6,7 +6,7 @@ threadPool = []
 
 def start():
     threadList = [seismicInformation,satelliteDesktop,synchronizationGithub,archLinuxCnRss,typhoonInformation,typhoonNews,startInformation]
-    threadIdList = ['seimicInformation','satelliteDesktop','synchronizationGithub','archLinuxCnRss','typhoonInformation','typhoonNews','startInformation']
+    threadIdList = ['seismicInformation','satelliteDesktop','synchronizationGithub','archLinuxCnRss','typhoonInformation','typhoonNews','startInformation']
     sleepTimeList = [1800,600,1800,86400,3600,3600,86400]
     index = 0
     while(True):
