@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 import subprocess,time,threading
-from EarthPlugins import MessagePush, GithubRecord, SeismicInformation,ArchLinuxCNRSS,CacheHandle,TyphoonInformation
+from EarthPlugins import MessagePush, GithubRecord, SeismicInformation,ArchLinuxCNRSS,CacheHandle,TyphoonInformation,CacheHandle
 
 threadPool = []
 
@@ -27,7 +27,9 @@ def archLinuxCnRss(sleepTime,threadingId):
         print('get ArchLinuxCN RSS Over')
         time.sleep(sleepTime)
     except Exception as e:
-        print('get ArchLinuxCN RSS Null:\n' + str(e))
+        CacheHandle.nowMassageId = 'flowError'
+        errorLog = 'get ArchLinuxCN RSS Null:\n' + str(e)
+        MessagePush.messagePush(errorLog)
     threadPool.remove(threadingId)
 
 def typhoonNews(sleepTime,threadingId):
@@ -37,7 +39,9 @@ def typhoonNews(sleepTime,threadingId):
         print('get typhoonNew Over')
         time.sleep(sleepTime)
     except Exception as e:
-        print('get typhoonNews Null:\n' + str(e))
+        CacheHandle.nowMassageId = 'flowError'
+        errorLog = 'get Typhoon Null:\n' + str(e)
+        MessagePush.messagePush(errorLog)
     threadPool.remove(threadingId)
 
 def seismicInformation(sleepTime,threadingId):
@@ -47,7 +51,9 @@ def seismicInformation(sleepTime,threadingId):
         print('get seismic Over')
         time.sleep(sleepTime)
     except Exception as e:
-        print('get seismic Null:\n' + str(e))
+        CacheHandle.nowMassageId = 'flowError'
+        errorLog = 'get Seismic Null:\n' + str(e)
+        MessagePush.messagePush(errorLog)
     threadPool.remove(threadingId)
 
 def satelliteDesktop(sleepTime,threadingId):
@@ -62,7 +68,9 @@ def synchronizationGithub(sleepTime,threadingId):
         print('get Github Over')
         time.sleep(sleepTime)
     except Exception as e:
-        print('get github Null:\n' + str(e))
+        CacheHandle.nowMassageId = 'flowError'
+        errorLog = 'get Github Null:\n' + str(e)
+        MessagePush.messagePush(errorLog)
     threadPool.remove(threadingId)
 
 def typhoonInformation(sleepTime,threadingId):
@@ -72,7 +80,9 @@ def typhoonInformation(sleepTime,threadingId):
         print('get typhoonData Over')
         time.sleep(sleepTime)
     except Exception as e:
-        print('get typhoonData Null:\n' + str(e))
+        CacheHandle.nowMassageId = 'flowError'
+        errorLog = 'get TyphoonData Null:\n' + str(e)
+        MessagePush.messagePush(errorLog)
     threadPool.remove(threadingId)
 
 def startInformation(sleepTime,threadingId):

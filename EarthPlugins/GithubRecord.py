@@ -98,12 +98,12 @@ def writeJudgment(filePath,commitList):
                            pushTime + "\n" +\
                            remarks + "\n" +\
                            overMessage
-            CacheHandle.nowMassageId = 'Github'
+            CacheHandle.nowMassageId = 'github'
             MessagePush.messagePush(messagePush)
             writeGithubLastup(commit,filePath)
             break
     else:
-        CacheHandle.nowMassageId = 'Github'
+        CacheHandle.nowMassageId = 'github'
         messagePush = "心智模型001号通信ing \n github仓库[" + commitName + "]信息同步ing \n 同步完成,请留意"
         MessagePush.messagePush(messagePush)
         writeGithubLastup(commit, filePath)

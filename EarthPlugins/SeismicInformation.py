@@ -88,7 +88,7 @@ def writeJudgment(seimicInformation,filePath,alertMessage):
                 message = "心智模型001号通信ing \n 正在向您传输高等地震灾害实况，具体信息为:" + "\n" +\
                            seimicInformation + "\n" +\
                            "该信息已保存至日志中，请留意"
-                CacheHandle.nowMassageId = 'Seismic'
+                CacheHandle.nowMassageId = 'seismic'
                 MessagePush.messagePush(message)
                 break
             writeSeismicInformation(seimicInformation, filePath)
@@ -98,7 +98,7 @@ def writeJudgment(seimicInformation,filePath,alertMessage):
             message = "心智模型001号通信ing \n 正在向您传输高等地震灾害实况，具体信息为:" + "\n" +\
                        seimicInformation + "\n" +\
                        "该信息已保存至日志中，请留意"
-            CacheHandle.nowMassageId = 'Seismic'
+            CacheHandle.nowMassageId = 'seismic'
             MessagePush.messagePush(message)
             break
         writeSeismicInformation(seimicInformation, filePath)

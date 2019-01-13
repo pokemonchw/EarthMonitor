@@ -41,13 +41,13 @@ def writeArticle(articleList,judge):
                 articleJson.append(getArticleInfo(articleListKeys))
                 message = '心智模型001号通信ing' + '\n' + 'ArchLinuxCN有新的变动日志，请留意' + '\n'
                 message = message + articleListKeys['title'] + '\n' + articleListKeys['link'] + '\n' + articleListKeys['pubDate']
-                CacheHandle.nowMassageId = 'ArchLinuxCNRSS'
+                CacheHandle.nowMassageId = 'archLinuxCNRSS'
                 MessagePush.messagePush(message)
     else:
         for i in range(0,len(articleList)):
             articleJson.append(getArticleInfo(articleList[i]))
         message = "心智模型001号通信ing" + '\n' + "ArchLinuxCN变动日志已更新完成，请留意"
-        CacheHandle.nowMassageId = 'ArchLinuxCNRSS'
+        CacheHandle.nowMassageId = 'archLinuxCNRSS'
         MessagePush.messagePush(message)
     articleJsonString = json.dumps(articleJson)
     articleFile = open(filePath, 'w', encoding='utf-8')

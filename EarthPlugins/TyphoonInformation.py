@@ -35,6 +35,7 @@ def pushNews():
             except error.URLError as e:
                 message = '心智模型001号通信ing' + '\n' + '台风信息获取失败，错误次数过多，已放弃尝试' + '\n' + \
                           '错误信息为:' + '\n' + str(e)
+                CacheHandle.nowMassageId = 'flowError'
                 pushMessage(message)
 
 def nowPush(http):
@@ -50,7 +51,7 @@ def nowPush(http):
         if data in fileData:
             pass
         else:
-            CacheHandle.nowMassageId = 'Typhoon'
+            CacheHandle.nowMassageId = 'typhoon'
             message = "心智模型001号通信ing" + '\n' + '气象台发布了新的信息，正在为您同步' + '\n' +  \
                       title[0] + ':' + '\n' + \
                       text[0] + '\n' + \
@@ -62,7 +63,7 @@ def nowPush(http):
             newsFile.write(fileStr)
             newsFile.close()
     else:
-        CacheHandle.nowMassageId = 'Typhoon'
+        CacheHandle.nowMassageId = 'typhoon'
         fileData = _loadjson(newsData)
         message = "心智模型001号通信ing" + '\n' + '气象台发布了新的信息，正在为您同步' + '\n' + \
                   title[0] + ':' + '\n' + \

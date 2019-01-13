@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-import notify2,subprocess,os,telegram,requests
+import notify2,subprocess,os,telegram,requests,os,datetime
 from EarthPlugins import PushMastodon,CacheHandle
 from bot_constant import *
 from telegram.ext import Updater
@@ -9,6 +9,16 @@ tg_bot = updater.bot
 baseDir = os.path.dirname(__file__)
 startLogLockFilePath = os.path.join(baseDir, 'data', 'startLogLock')
 
+putClassData = {
+    "start":["system","shell","qq","tg","mastodon"],
+    "github":["system","shell","qq","tg","mastodon"],
+    "archLinuxCNRSS":["system","shell","qq","tg","mastodon"],
+    "seismic":["system","shell","qq","tg","mastodon"],
+    "typhoon":["system","shell","qq","tg","mastodon"],
+    "mastodonError":["system","shell","log"],
+    "flowError":["system","shell","log"]
+}
+
 def messagePush(message):
     startState = startLogLock()
     if startState == False and CacheHandle.nowMassageId == 'start':
@@ -16,16 +26,14 @@ def messagePush(message):
     if CacheHandle.nowMassageId == 'start' and startState:
         pass
     else:
-        systemMessage(message)
-        shellMessage(message)
-        tgQQMessage(message)
-        mastodonMessage(message)
+        putList = putClassData[CacheHandle.nowMassageId]
+        for key in putList:
+            eval(putClassData[key] + 'Message')(message)
+            putMessageDict[key](message)
     CacheHandle.nowMassageId = ''
 
 def startLogLock():
-    if os.path.isfile(startLogLockFilePath):
-        return True
-    return False
+    return os.path.isfile(startLogLockFilePath)
 
 def systemMessage(message):
     notify2.init("地球监测站")
@@ -40,16 +48,25 @@ def shellMessage(message):
 def mastodonMessage(message):
     PushMastodon.pushMessage(message)
 
-def tgQQMessage(message):
-    try:
-        tgMessage(message)
-    except telegram.error.TimedOut:
-        pass
-    qqMessage(message)
-
 def tgMessage(message):
     for i in TG_LIST:
         tg_bot.send_message(i,text=message)
+
+def logMessage(message):
+    nowTime = datetime.datetime.now()
+    year = nowTime.year
+    month = nowTime.month
+    day = nowTime.day
+    logTime = str(year) + str(month) + str(day)
+    logPath = os.path.join(baseDir,'data','log',logTime)
+    if os.path.isfile(logPath):
+        logFile = open(logPath,'a',encoding='utf-8')
+    else:
+        logFile = open(logPath,'w',encoding='utf-8')
+    logFile.write('\n' + str(message))
+    logFile.close()
+
+
 
 def qqMessage(message):
     for i in QQ_LIST:

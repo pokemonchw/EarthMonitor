@@ -1,5 +1,5 @@
 from mastodon import Mastodon
-from EarthPlugins import MessagePush
+from EarthPlugins import MessagePush,CacheHandle
 import socks,socket
 from bot_constant import MASTODON_CLIENT_ID,MASTODON_CLIENT_SECRET,MASTODON_ACCESS_TOKEN,MASTODON_API_BASE_URL,PROXY_IP,PROXY_PORT
 
@@ -17,23 +17,29 @@ def pushMessage(message):
         api.toot(message)
     except Exception as e:
         messageA = '心智模型002号通信ing' + '\n' + '向Mastodon推送消息失败，错误信息为:' + '\n' + str(e)
+        CacheHandle.nowMassageId = 'mastodonError'
         MessagePush.messagePush(messageA)
         messageB = '心智模型002号通信ing' + '\n' + '正在尝试重新推送'
+        CacheHandle.nowMassageId = 'mastodonError'
         MessagePush.messagePush(messageB)
         messageC = '心智模型002号通信ing' + '\n' + '推送成功，信息已同步至Mastodon'
         try:
             api.toot(message)
+            CacheHandle.nowMassageId = 'mastodonError'
             MessagePush.messagePush(messageC)
         except:
             try:
                 api.toot(message)
+                CacheHandle.nowMassageId = 'mastodonError'
                 MessagePush.messagePush(messageC)
             except:
                 try:
                     api.toot(message)
+                    CacheHandle.nowMassageId = 'mastodonError'
                     MessagePush.messagePush(messageC)
                 except:
                     messageD = '心智模型002号通信ing' + '\n' + '错误次数过多，已放弃，请联系节点管理员'
+                    CacheHandle.nowMassageId = 'mastodonError'
                     MessagePush.messagePush(messageD)
     socks.setdefaultproxy(socksDefault)
     socket.socket = socketDefault
