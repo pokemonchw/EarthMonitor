@@ -12,7 +12,7 @@ startLogLockFilePath = os.path.join(baseDir, 'data', 'startLogLock')
 putClassData = {
     "start":["system","shell","qq","tg","mastodon"],
     "github":["system","shell","qq","tg","mastodon"],
-    "archLinuxCNRSS":["system","shell","qq","tg","mastodon"],
+    "archLinuxCNRSS":["system","shell","qq","tg"],
     "seismic":["system","shell","qq","tg","mastodon"],
     "typhoon":["system","shell","qq","tg","mastodon"],
     "mastodonError":["system","shell","log"],
