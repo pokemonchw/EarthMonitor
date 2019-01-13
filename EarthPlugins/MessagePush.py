@@ -28,8 +28,7 @@ def messagePush(message):
     else:
         putList = putClassData[CacheHandle.nowMassageId]
         for key in putList:
-            eval(putClassData[key] + 'Message')(message)
-            putMessageDict[key](message)
+            eval(key + 'Message')(message)
     CacheHandle.nowMassageId = ''
 
 def startLogLock():
