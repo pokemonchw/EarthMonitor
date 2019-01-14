@@ -19,6 +19,7 @@ def start():
                 nowThreading = threading.Thread(target=threadList[i],args=(sleepTimeList[i],threadIdList[i]),name=threadName,daemon=True)
                 nowThreading.start()
             time.sleep(1)
+        index += 1
 
 def archLinuxCnRss(sleepTime,threadingId):
     print('get ArchLinuxCN RSS Now')
