@@ -1,94 +1,55 @@
 #!/usr/bin/python3
 import subprocess,time,threading
-from EarthPlugins import MessagePush, GithubRecord, SeismicInformation,ArchLinuxCNRSS,CacheHandle,TyphoonInformation,CacheHandle
+from EarthPlugins import MessagePush, GithubRecord, SeismicInformation,ArchLinuxCNRSS,CacheHandle,TyphoonInformation,CacheHandle,DailyCycle
 
 threadPool = []
 
 def start():
-    threadList = [seismicInformation,satelliteDesktop,synchronizationGithub,archLinuxCnRss,typhoonInformation,typhoonNews,startInformation]
-    threadIdList = ['seismicInformation','satelliteDesktop','synchronizationGithub','archLinuxCnRss','typhoonInformation','typhoonNews','startInformation']
-    sleepTimeList = [1800,600,1800,86400,3600,3600,86400]
     index = 0
+    threadingIdList = list(informationData.keys())
     while(True):
-        for i in range(0,len(threadList)):
-            if threadIdList[i] in threadPool:
+        for i in range(0,len(threadingIdList)):
+            if threadingIdList[i] in threadPool:
                 pass
             else:
-                threadPool.append(threadIdList[i])
-                threadName = threadIdList[i] + str(index)
-                nowThreading = threading.Thread(target=threadList[i],args=(sleepTimeList[i],threadIdList[i]),name=threadName,daemon=True)
+                threadPool.append(threadingIdList[i])
+                threadName = threadingIdList[i] + str(index)
+                print(threadingIdList[i])
+                nowThreading = threading.Thread(target=nowRunStart,args=(threadingIdList[i],),name=threadName,daemon=True)
                 nowThreading.start()
             time.sleep(1)
         index += 1
 
-def archLinuxCnRss(sleepTime,threadingId):
-    print('get ArchLinuxCN RSS Now')
-    try:
-        ArchLinuxCNRSS.getArchLinuxCNRSS()
-        print('get ArchLinuxCN RSS Over')
-        time.sleep(sleepTime)
-    except Exception as e:
-        CacheHandle.nowMassageId = 'flowError'
-        errorLog = 'get ArchLinuxCN RSS Null:\n' + str(e)
-        MessagePush.messagePush(errorLog)
-    threadPool.remove(threadingId)
+informationData = {
+    "seismicInformation":[SeismicInformation.getSeismicInformation,1800],
+    "satelliteDesktop":[None,600],
+    "synchronizationGithub":[GithubRecord.getGithubRecord,1800],
+    "archLinuxCNRSS":[ArchLinuxCNRSS.getArchLinuxCNRSS,86400],
+    "typhoonInformation":[TyphoonInformation.pushTyphoonInfo,3600],
+    "typhoonNews":[TyphoonInformation.pushNews,3600],
+    "startInformation":[None,86400],
+    "dailyCycleInformation":[DailyCycle.startDailyCycle,3600],
+}
 
-def typhoonNews(sleepTime,threadingId):
-    print('get typhoonNew Now')
-    try:
-        TyphoonInformation.pushNews()
-        print('get typhoonNew Over')
-        time.sleep(sleepTime)
-    except Exception as e:
-        CacheHandle.nowMassageId = 'flowError'
-        errorLog = 'get Typhoon Null:\n' + str(e)
-        MessagePush.messagePush(errorLog)
-    threadPool.remove(threadingId)
-
-def seismicInformation(sleepTime,threadingId):
-    print('get seismic Now')
-    try:
-        SeismicInformation.getSeismicInformation()
-        print('get seismic Over')
-        time.sleep(sleepTime)
-    except Exception as e:
-        CacheHandle.nowMassageId = 'flowError'
-        errorLog = 'get Seismic Null:\n' + str(e)
-        MessagePush.messagePush(errorLog)
-    threadPool.remove(threadingId)
-
-def satelliteDesktop(sleepTime,threadingId):
-    subprocess.call("himawaripy", shell=True)
+def nowRunStart(threadingId):
+    sleepTime = informationData[threadingId][1]
+    nowInformation = informationData[threadingId][0]
+    if threadingId == 'satelliteDesktop':
+        subprocess.call("himawaripy", shell=True)
+    elif threadingId == 'startInformation':
+        message = "链接建立完成，通信开始，监测站正常工作中"
+        CacheHandle.nowMassageId = 'start'
+        MessagePush.messagePush(message)
+    else:
+        print('get ' + threadingId + ' Now')
+        try:
+            nowInformation()
+            print('get ' + threadingId + ' Over')
+        except Exception as e:
+            CacheHandle.nowMassageId = 'flowError'
+            errorLog = 'get ' + threadingId + ' Null:\n' + str(e)
+            MessagePush.messagePush(errorLog)
     time.sleep(sleepTime)
     threadPool.remove(threadingId)
-
-def synchronizationGithub(sleepTime,threadingId):
-    print('get Github Now')
-    try:
-        GithubRecord.getGithubRecord()
-        print('get Github Over')
-        time.sleep(sleepTime)
-    except Exception as e:
-        CacheHandle.nowMassageId = 'flowError'
-        errorLog = 'get Github Null:\n' + str(e)
-        MessagePush.messagePush(errorLog)
-    threadPool.remove(threadingId)
-
-def typhoonInformation(sleepTime,threadingId):
-    print('get typhoonData Now')
-    try:
-        TyphoonInformation.pushTyphoonInfo()
-        print('get typhoonData Over')
-        time.sleep(sleepTime)
-    except Exception as e:
-        CacheHandle.nowMassageId = 'flowError'
-        errorLog = 'get TyphoonData Null:\n' + str(e)
-        MessagePush.messagePush(errorLog)
-    threadPool.remove(threadingId)
-
-def startInformation(sleepTime,threadingId):
-    message = "链接建立完成，通信开始，监测站正常工作中"
-    CacheHandle.nowMassageId = 'start'
-    MessagePush.messagePush(message)
 
 start()

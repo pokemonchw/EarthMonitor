@@ -79,9 +79,9 @@ def nagnitudeJudgment(seimicInformation,nagnitude,localTimeS):
 # 读写判断
 def writeJudgment(seimicInformation,filePath,alertMessage):
     if os.path.exists(filePath) and os.path.isfile(filePath):
-        file = open(filePath,'r')
-        line = file.readlines()
-        file.close()
+        f = open(filePath,'r')
+        line = f.readlines()
+        f.close()
         line = list(line)
         while str(line).find(seimicInformation) == -1:
             while alertMessage == 0:
@@ -107,13 +107,13 @@ def writeJudgment(seimicInformation,filePath,alertMessage):
 # 写入文件
 def writeSeismicInformation(seimicInformation,filePath):
     if os.path.exists(filePath) and os.path.isfile(filePath):
-        file = open(filePath, 'a', encoding='utf-8')
-        file.write(seimicInformation + "\n")
-        file.close()
+        f = open(filePath, 'a', encoding='utf-8')
+        f.write(seimicInformation + "\n")
+        f.close()
     else:
-        file = open(filePath, 'w', encoding='utf-8')
-        file.write(seimicInformation + "\n")
-        file.close()
+        f = open(filePath, 'w', encoding='utf-8')
+        f.write(seimicInformation + "\n")
+        f.close()
     pass
 
 # UTC时间转本地时间（+8:00）

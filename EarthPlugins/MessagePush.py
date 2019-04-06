@@ -15,6 +15,7 @@ putClassData = {
     "archLinuxCNRSS":["system","shell","qq","tg"],
     "seismic":["system","shell","qq","tg","mastodon"],
     "typhoon":["system","shell","qq","tg","mastodon"],
+    "doomsday":["system","shell","qq","tg","mastodon"],
     "mastodonError":["system","shell","log"],
     "flowError":["system","shell","log"]
 }
