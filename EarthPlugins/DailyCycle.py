@@ -1,7 +1,8 @@
 import os
 import datetime
 import json
-from EarthPlugins import MessagePush,DailyCyclePlugins,CacheHandle
+from EarthPlugins import MessagePush,CacheHandle
+from EarthPlugins.DailyCyclePlugins import DoomsdayClock
 
 def startDailyCycle():
     today = str(datetime.date.today())
@@ -15,9 +16,9 @@ def startDailyCycle():
     nowHour = getNowHour()
     if int(nowHour) == 0:
         if not('doomsday' in dailyCycleData) or dailyCycleData['doomsday'] != 1:
-            doomsdayMessage = DailyCyclePlugins.DoomsdayClock.getDoomsdayClockText()
+            doomsdayMessage = DoomsdayClock.getDoomsdayClockText()
             message = '心智模型001号通信ing' + '\n' + '正在为您同步末日时钟刻度' + '\n' + doomsdayMessage + '\n' + '同步完成，请留意'
-            CacheHandle.nowMassageId == 'doomsday'
+            CacheHandle.nowMassageId = 'doomsday'
             MessagePush.messagePush(message)
             dailyCycleData['doomsday'] = 1
     dailyCycleDataStr = json.dumps(dailyCycleData)

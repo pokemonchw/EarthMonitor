@@ -36,7 +36,7 @@ def doomsdayInfoFanYi(text):
         scale = re.findall(r' (.*) AND A HALF MINUTES ',text)
         nowMinutes = int(scale[0]) + 1
         nowSecond = 30
-    nowTime = 60 - nowMintes
+    nowTime = 60 - nowMinutes
     result = '当前末日时钟刻度为:11时' + str(nowTime) + '分' + str(nowSecond) + '秒\n距离世界末日还有:' + str(nowMinutes) + '分' + str(nowSecond) + '秒'
     if nowMinutes == 0 and nowSecond == 0:
         result = result + '\n末日来临了'
