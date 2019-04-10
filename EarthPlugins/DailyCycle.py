@@ -9,7 +9,7 @@ def startDailyCycle():
     baseDir = os.path.dirname(__file__)
     fileName = today + '.json'
     filePath = os.path.join(baseDir,'data','dailyCycle',fileName)
-    if dateJudge == True:
+    if dateJudge() == True:
         dailyCycleData = _loadjson(filePath)
     else:
         dailyCycleData = {}

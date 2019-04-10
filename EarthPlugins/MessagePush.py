@@ -17,7 +17,8 @@ putClassData = {
     "typhoon":["system","shell","qq","tg","mastodon"],
     "doomsday":["system","shell","qq","tg","mastodon"],
     "mastodonError":["system","shell","log"],
-    "flowError":["system","shell","log"]
+    "flowError":["system","shell","log"],
+    "test":["system","shell"]
 }
 
 def messagePush(message):
