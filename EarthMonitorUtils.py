@@ -28,7 +28,7 @@ informationData = {
     "typhoonInformation":[TyphoonInformation.pushTyphoonInfo,3600],
     "typhoonNews":[TyphoonInformation.pushNews,3600],
     "startInformation":[None,86400],
-    "dailyCycleInformation":[DailyCycle.startDailyCycle,3600],
+    "dailyCycleInformation":[DailyCycle.startDailyCycle,600],
 }
 
 def nowRunStart(threadingId):

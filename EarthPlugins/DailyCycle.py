@@ -15,7 +15,7 @@ def startDailyCycle():
         dailyCycleData = {}
     nowHour = getNowHour()
     if int(nowHour) == 0:
-        if not('doomsday' in dailyCycleData) or dailyCycleData['doomsday'] != 1:
+        if 'doomsday' not in dailyCycleData.keys() or dailyCycleData['doomsday'] != 1:
             doomsdayMessage = DoomsdayClock.getDoomsdayClockText()
             message = '心智模型001号通信ing' + '\n' + '正在为您同步末日时钟刻度' + '\n' + doomsdayMessage + '\n' + '同步完成，请留意'
             CacheHandle.nowMassageId = 'doomsday'
